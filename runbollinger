@@ -1,0 +1,5 @@
+#!/bin/sh
+target="bollinger-1.0.0-SNAPSHOT-jar-with-dependencies.jar"
+java -jar $HOME/workspace/bollinger/target/$target $@
+
+
