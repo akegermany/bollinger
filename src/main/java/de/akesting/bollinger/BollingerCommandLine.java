@@ -28,10 +28,14 @@ public class BollingerCommandLine {
         options.addOption(OptionBuilder.withDescription("prints this help message").withLongOpt("help").create("h"));
         options.addOption("f", "file", true, "input file");
         options.addOption("s", "sigma", true, "smoothing width parameter");
-        options.addOption("x", "xcolumn", true, "first column of input data, default=" + getFirstInputColumn());
-        options.addOption("y", "ycolumn", true, "second column of input data, default=" + getSecondInputColumn());
+        options.addOption("x", "xcolumn", true, "first column of input data (starting with 0), default="
+                + getFirstInputColumn());
+        options.addOption("y", "ycolumn", true, "second column of input data (starting with 0), default="
+                + getSecondInputColumn());
         options.addOption("w", "width", true, "output width, default: same width as input");
-        options.addOption("c", "separator", true, "input file separator");
+        options.addOption("d", "delimiter", true, "delimiter of input file");
+        options.addOption("t", "timeformat", true, "format string of xcolumn, ex.: YYYY-MM-dd'T'HH:mm:ss");
+
     }
 
     public void parse(String[] args) {
@@ -78,19 +82,30 @@ public class BollingerCommandLine {
         if (cmdline != null && cmdline.hasOption("x")) {
             return Integer.parseInt(Preconditions.checkNotNull(cmdline.getOptionValue("x")));
         }
-        return 1; // default
+        return 0; // default
     }
 
     public int getSecondInputColumn() {
         if (cmdline != null && cmdline.hasOption("y")) {
             return Integer.parseInt(Preconditions.checkNotNull(cmdline.getOptionValue("y")));
         }
-        return 2; // default
+        return 1; // default
+    }
+
+    public String getTimeFormat() {
+        if (cmdline != null && cmdline.hasOption("t")) {
+            return Preconditions.checkNotNull(cmdline.getOptionValue("t"));
+        }
+        return null;
+    }
+
+    public boolean isTimeFormat() {
+        return getTimeFormat() != null;
     }
 
     public char getSeparator() {
-        if (cmdline != null && cmdline.hasOption("c")) {
-            String value = cmdline.getOptionValue("c");
+        if (cmdline != null && cmdline.hasOption("d")) {
+            String value = cmdline.getOptionValue("d");
             Preconditions.checkNotNull(value);
             // Preconditions.checkArgument(value.length() == 1, "only one character separator allowed: " + value);
             return value.charAt(0);

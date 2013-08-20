@@ -23,10 +23,11 @@ public class InputData {
         yData.add(y);
         xMin = Math.min(xMin, x);
         xMax = Math.max(xMax, x);
+        LOG.info("added x={}, y={}", x, y);
     }
 
-    public void sort() {
-        LOG.info("sorting not yet implemented");
+    public void sort() throws IllegalAccessException {
+        throw new IllegalAccessException("sorting not yet implemented");
     }
 
     public double[] getXValues() {
