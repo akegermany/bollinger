@@ -14,8 +14,8 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.log4j.PropertyConfigurator;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,8 +100,8 @@ public class BollingerMain {
             try {
                 double x;
                 if (cmdLine.isTimeFormat()) {
-                    DateTime dateTime = LocalDateTime.parse(record.get(xColum), DateTimeFormat.forPattern(cmdLine.getTimeFormat())).toDateTime(
-                            DateTimeZone.UTC);
+                    DateTimeFormatter timeFormatter = DateTimeFormat.forPattern(cmdLine.getTimeFormat());
+                    DateTime dateTime = timeFormatter.parseDateTime(record.get(xColum)).toDateTime(DateTimeZone.UTC);
                     x = TimeUnit.MILLISECONDS.toSeconds(dateTime.getMillis());
                     LOG.info("time={} --> dateTime={} --> seconds=" + (long) x, record.get(xColum), dateTime);
                 } else {

@@ -13,6 +13,7 @@ public class TimeParsingUtilTest {
     @Test
     public void test() {
         // fail("Not yet implemented");
+        // DateTime dateTime = timeFormatter.parseDateTime(record.get(xColum)).toDateTime(DateTimeZone.UTC);
         DateTime dateTime = LocalDateTime.parse("Mar 25, 2013 5:32:08 PM +0200",
                 DateTimeFormat.forPattern("MMM d, YYYY h:mm:ss a Z")).toDateTime(DateTimeZone.UTC);
         long time = TimeUnit.MILLISECONDS.toSeconds(dateTime.getMillis());
